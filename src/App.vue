@@ -15,11 +15,13 @@
 import {API} from 'aws-amplify';
 import {createTodo} from './graphql/mutations';
 import {listTodos} from '@/graphql/queries';
+import {onCreateTodo} from '@/graphql/subscriptions';
 
 export default {
   name: 'App',
   async created() {
-    this.getTodos();
+    await this.getTodos();
+    this.subscribe();
   },
   data() {
     return {
@@ -33,6 +35,7 @@ export default {
       const {name, description} = this;
       if (!name || !description) return;
       const todo = {name, description};
+      this.todos = [...this.todos, todo];
       await API.graphql({query: createTodo, variables: {input: todo}});
       this.name = '';
       this.description = '';
@@ -40,6 +43,15 @@ export default {
     async getTodos() {
       const todos = await API.graphql({query: listTodos});
       this.todos = todos.data.listTodos.items;
+    },
+    subscribe() {
+      API.graphql({query: onCreateTodo}).subscribe({
+        next: (eventData) => {
+          let todo = eventData.value.data.onCreateTodo;
+          if (this.todos.some((item) => item.name === todo.name)) return;
+          this.todos = [...this.todos, todo];
+        },
+      });
     },
   },
 };
