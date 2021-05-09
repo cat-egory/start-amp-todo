@@ -10,6 +10,11 @@
       "StackName": "amplify-startamptodo-dev-131358",
       "StackId": "arn:aws:cloudformation:ap-northeast-2:691172683920:stack/amplify-startamptodo-dev-131358/81a96770-9ffc-11eb-aeff-0258c950a704",
       "AmplifyAppId": "dmz8jglbg7rs9"
+    },
+    "categories": {
+      "auth": {
+        "startamptodo73ab267e": {}
+      }
     }
   }
 }
