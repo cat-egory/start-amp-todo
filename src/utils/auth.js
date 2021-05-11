@@ -1,7 +1,8 @@
 import {Auth} from 'aws-amplify';
-import {AmplifyEventBus} from 'aws-amplify-vue';
+// import {AmplifyEventBus} from 'aws-amplify-vue';
 
 function getUser() {
+  console.log('getUser:');
   return Auth.currentAuthenticatedUser()
     .then((user) => {
       if (user && user.signInUserSession) {
@@ -16,56 +17,56 @@ function getUser() {
     });
 }
 
-function signUp(username, password) {
-  return Auth.signUp({
-    username,
-    password,
-    attributes: {
-      email: username,
-    },
-  })
-    .then((data) => {
-      AmplifyEventBus.$emit('localUser', data.user);
-      if (data.userConfirmed === false) {
-        AmplifyEventBus.$emit('authState', 'confirmSignUp');
-      } else {
-        AmplifyEventBus.$emit('authState', 'signIn');
-      }
-      return data;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-function confirmSignUp(username, code) {
-  return Auth.confirmSignUp(username, code)
-    .then((data) => {
-      AmplifyEventBus.$emit('authState', 'signIn');
-      return data; // 'SUCCESS'
-    })
-    .catch((err) => {
-      console.log(err);
-      throw err;
-    });
-}
-
-function resendSignUp(username) {
-  return Auth.resendSignUp(username)
-    .then(() => {
-      return 'SUCCESS';
-    })
-    .catch((err) => {
-      console.log(err);
-      return err;
-    });
-}
-
+// function signUp(username, password) {
+//   return Auth.signUp({
+//     username,
+//     password,
+//     attributes: {
+//       email: username,
+//     },
+//   })
+//     .then((data) => {
+//       AmplifyEventBus.$emit('localUser', data.user);
+//       if (data.userConfirmed === false) {
+//         AmplifyEventBus.$emit('authState', 'confirmSignUp');
+//       } else {
+//         AmplifyEventBus.$emit('authState', 'signIn');
+//       }
+//       return data;
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// }
+//
+// function confirmSignUp(username, code) {
+//   return Auth.confirmSignUp(username, code)
+//     .then((data) => {
+//       AmplifyEventBus.$emit('authState', 'signIn');
+//       return data; // 'SUCCESS'
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       throw err;
+//     });
+// }
+//
+// function resendSignUp(username) {
+//   return Auth.resendSignUp(username)
+//     .then(() => {
+//       return 'SUCCESS';
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       return err;
+//     });
+// }
+//
 async function signIn(username, password) {
   try {
     const user = await Auth.signIn(username, password);
     if (user) {
-      AmplifyEventBus.$emit('authState', 'signedIn');
+      // AmplifyEventBus.$emit('authState', 'signedIn');
     }
   } catch (err) {
     if (err.code === 'UserNotConfirmedException') {
@@ -85,17 +86,18 @@ async function signIn(username, password) {
     }
   }
 }
+//
+// function signOut() {
+//   return Auth.signOut()
+//     .then((data) => {
+//       AmplifyEventBus.$emit('authState', 'signedOut');
+//       return data;
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       return err;
+//     });
+// }
 
-function signOut() {
-  return Auth.signOut()
-    .then((data) => {
-      AmplifyEventBus.$emit('authState', 'signedOut');
-      return data;
-    })
-    .catch((err) => {
-      console.log(err);
-      return err;
-    });
-}
-
-export {getUser, signUp, confirmSignUp, resendSignUp, signIn, signOut};
+// export {getUser, signUp, confirmSignUp, resendSignUp, signIn, signOut};
+export {getUser, signIn};
