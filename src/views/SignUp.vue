@@ -9,7 +9,11 @@
 export default {
   name: 'SignUp',
   data() {
-    return {signUpConfig: {}};
+    return {
+      signUpConfig: {
+        defaultCountryCode: '82',
+      },
+    };
   },
 };
 </script>
