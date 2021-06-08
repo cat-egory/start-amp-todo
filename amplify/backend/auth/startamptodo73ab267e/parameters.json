@@ -1,27 +1,25 @@
 {
-    "identityPoolName": "startamptodo73ab267e_identitypool_73ab267e",
-    "allowUnauthenticatedIdentities": false,
     "resourceNameTruncated": "starta73ab267e",
     "userPoolName": "startamptodo73ab267e_userpool_73ab267e",
     "autoVerifiedAttributes": [
-        "email"
+        "phone_number"
     ],
-    "mfaConfiguration": "OFF",
+    "mfaConfiguration": "OPTIONAL",
     "mfaTypes": [
         "SMS Text Message"
     ],
-    "smsAuthenticationMessage": "Your authentication code is {####}",
-    "smsVerificationMessage": "Your verification code is {####}",
+    "smsAuthenticationMessage": "hehe : {####}",
+    "smsVerificationMessage": "code: {####}",
     "emailVerificationSubject": "Your verification code",
     "emailVerificationMessage": "Your verification code is {####}",
-    "defaultPasswordPolicy": false,
-    "passwordPolicyMinLength": 8,
+    "defaultPasswordPolicy": true,
+    "passwordPolicyMinLength": "8",
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
         "email"
     ],
     "userpoolClientGenerateSecret": false,
-    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientRefreshTokenValidity": "30",
     "userpoolClientWriteAttributes": [
         "email"
     ],
@@ -32,7 +30,7 @@
     "userpoolClientSetAttributes": false,
     "sharedId": "73ab267e",
     "resourceName": "startamptodo73ab267e",
-    "authSelections": "identityPoolAndUserPool",
+    "authSelections": "userPoolOnly",
     "authRoleArn": {
         "Fn::GetAtt": [
             "AuthRole",
@@ -45,9 +43,18 @@
             "Arn"
         ]
     },
-    "useDefault": "default",
+    "useDefault": "manual",
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
-    "dependsOn": []
+    "dependsOn": [],
+    "userPoolGroups": false,
+    "adminQueries": false,
+    "triggers": "{}",
+    "hostedUI": false,
+    "parentStack": {
+        "Ref": "AWS::StackId"
+    },
+    "permissions": [],
+    "authProviders": []
 }
